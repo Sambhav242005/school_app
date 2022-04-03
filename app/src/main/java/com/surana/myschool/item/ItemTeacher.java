@@ -1,4 +1,4 @@
-package com.surana.myschool;
+package com.surana.myschool.item;
 
 public class ItemTeacher {
     String name;
