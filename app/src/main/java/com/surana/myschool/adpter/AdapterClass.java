@@ -33,7 +33,7 @@ public class AdapterClass extends RecyclerView.Adapter<AdapterClass.ViewHolder>{
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
         holder.className.setText(class_array.get(position).getClass_name());
-        holder.latestMessage.setText(class_array.get(position).getLatest_message());
+        holder.createBy.setText(class_array.get(position).getCreate_by());
     }
 
     @Override
@@ -43,11 +43,11 @@ public class AdapterClass extends RecyclerView.Adapter<AdapterClass.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView className,latestMessage;
+        TextView className,createBy;
         public ViewHolder(View itemView) {
             super(itemView);
             className = itemView.findViewById(R.id.class_layout_name);
-            latestMessage = itemView.findViewById(R.id.class_layout_latest_message);
+            createBy = itemView.findViewById(R.id.class_layout_create_by);
         }
     }
 

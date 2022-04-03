@@ -33,7 +33,7 @@ public class AddUsersActivity extends AppCompatActivity {
     String select = "student";
     Button btn_student,btn_teacher,btn_submit,btn_selectClass,btn_done;
     LinearLayout student_layout,teacher_layout,main_layout,select_layout;
-    EditText mEditStudentName,mEditStudentRollNo,mEditStudentPassword;
+    EditText mEditStudentName,mEditStudentRollNo,mEditStudentPassword,mEditStudentFather,mEditStudentMother,mEditStudentAge;
     EditText mEditTeacherName,mEditTeacherEmail,mEditTeacherPassword;
     TextView mError;
     FirebaseAuth mAuth;
@@ -62,6 +62,9 @@ public class AddUsersActivity extends AppCompatActivity {
         mEditStudentName = findViewById(R.id.student_activity_name);
         mEditStudentRollNo = findViewById(R.id.student_activity_roll_no);
         mEditStudentPassword = findViewById(R.id.student_activity_password);
+        mEditStudentFather = findViewById(R.id.student_activity_father);
+        mEditStudentMother = findViewById(R.id.student_activity_mother);
+        mEditStudentAge = findViewById(R.id.student_activity_age);
 
         mEditTeacherName = findViewById(R.id.teacher_activity_name);
         mEditTeacherEmail = findViewById(R.id.teacher_activity_email);
@@ -96,7 +99,9 @@ public class AddUsersActivity extends AppCompatActivity {
 
                     if (!TextUtils.isEmpty(mEditStudentName.getText().toString())
                             && !TextUtils.isEmpty(mEditStudentRollNo.getText().toString())
-                            && !TextUtils.isEmpty(mEditStudentPassword.getText().toString())){
+                            && !TextUtils.isEmpty(mEditStudentPassword.getText().toString())
+                            && !TextUtils.isEmpty(mEditStudentFather.getText().toString())
+                            && !TextUtils.isEmpty(mEditStudentMother.getText().toString())){
 
                         Log.d(TAG,"Student");
 
@@ -142,6 +147,12 @@ public class AddUsersActivity extends AppCompatActivity {
 
     private void addStudentAccount() {
         // Add Student
+        String email = mEditStudentRollNo.getText().toString()+"@gmail.com";
+        String username = mEditStudentName.getText().toString();
+        String password = mEditStudentPassword.getText().toString();
+        String father = mEditStudentFather.getText().toString();
+        String mother = mEditStudentMother.getText().toString();
+
     }
 
     private void addTeacherAccount() {

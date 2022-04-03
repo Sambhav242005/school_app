@@ -2,11 +2,11 @@ package com.surana.myschool.item;
 
 public class ItemClass {
     String class_name;
-    String latest_message;
+    String create_by;
 
-    public ItemClass(String class_name, String latest_message) {
+    public ItemClass(String class_name, String create_by) {
         this.class_name = class_name;
-        this.latest_message = latest_message;
+        this.create_by = create_by;
     }
 
     public String getClass_name() {
@@ -17,11 +17,11 @@ public class ItemClass {
         this.class_name = class_name;
     }
 
-    public String getLatest_message() {
-        return latest_message;
+    public String getCreate_by() {
+        return create_by;
     }
 
-    public void setLatest_message(String latest_message) {
-        this.latest_message = latest_message;
+    public void setCreate_by(String create_by) {
+        this.create_by = create_by;
     }
 }

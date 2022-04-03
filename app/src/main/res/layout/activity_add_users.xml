@@ -91,7 +91,7 @@
             android:layout_margin="10dp"
             android:id="@+id/student_layout_add_users"
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="450dp">
 
             <EditText
                 android:id="@+id/student_activity_name"
@@ -108,6 +108,33 @@
                 android:padding="10dp"
                 android:textSize="25dp"
                 android:hint="Student RollNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:inputType="number"
+                android:id="@+id/student_activity_age"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:textSize="25dp"
+                android:hint="Student Age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:inputType="number"
+                android:id="@+id/student_activity_father"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:textSize="25dp"
+                android:hint="Student Father"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:inputType="number"
+                android:id="@+id/student_activity_mother"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:textSize="25dp"
+                android:hint="Student Mother"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <EditText

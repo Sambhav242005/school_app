@@ -1,12 +1,12 @@
 package com.surana.myschool.item;
 
-public class ItemClassAddUsers {
+public class ItemClassCheck {
 
     String className;
     String classCreate;
     Boolean isCheck;
 
-    public ItemClassAddUsers(String className, String classCreate, Boolean isCheck) {
+    public ItemClassCheck(String className, String classCreate, Boolean isCheck) {
         this.className = className;
         this.classCreate = classCreate;
         this.isCheck = isCheck;

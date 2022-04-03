@@ -11,30 +11,30 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.surana.myschool.R;
-import com.surana.myschool.item.ItemClassAddUsers;
+import com.surana.myschool.item.ItemClassCheck;
 
 import java.util.ArrayList;
 
-public class AdapterClassAddUsers extends RecyclerView.Adapter<AdapterClassAddUsers.ViewHolder>{
+public class AdapterClassCheck extends RecyclerView.Adapter<AdapterClassCheck.ViewHolder>{
 
-    private ArrayList<ItemClassAddUsers> addUsers =new ArrayList<>();
+    private ArrayList<ItemClassCheck> itemClassCheckArrayList =new ArrayList<>();
     private Context context;
 
-    public AdapterClassAddUsers(ArrayList<ItemClassAddUsers> addUsers, Context context) {
-        this.addUsers = addUsers;
+    public AdapterClassCheck(ArrayList<ItemClassCheck> itemClassCheckArrayList, Context context) {
+        this.itemClassCheckArrayList = itemClassCheckArrayList;
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.class_add_users_layout,parent,false);
-        AdapterClassAddUsers.ViewHolder holder = new AdapterClassAddUsers.ViewHolder(view);
+        AdapterClassCheck.ViewHolder holder = new AdapterClassCheck.ViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
-        ItemClassAddUsers classAddUsers = addUsers.get(position);
+        ItemClassCheck classAddUsers = itemClassCheckArrayList.get(position);
 
         holder.name.setChecked(classAddUsers.getCheck());
 
@@ -48,7 +48,7 @@ public class AdapterClassAddUsers extends RecyclerView.Adapter<AdapterClassAddUs
 
     @Override
     public int getItemCount() {
-        return addUsers.size();
+        return itemClassCheckArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
