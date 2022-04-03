@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".StartActivity">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@color/white"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:id="@+id/student_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:text="Student" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@color/white"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:textSize="30dp"
+            android:id="@+id/teacher_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Teacher" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="350dp">
+        <TextView
+            android:id="@+id/error_login"
+            android:text="Error"
+            android:textSize="30dp"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:layout_marginTop="35dp"
+            android:padding="10dp"
+            android:textSize="30dp"
+            android:hint="RollNo"
+            android:id="@+id/email_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/password_login"
+            android:padding="10dp"
+            android:layout_marginTop="35dp"
+            android:textSize="30dp"
+            android:hint="Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/login_submit"
+        android:text="Submit"
+        android:textSize="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

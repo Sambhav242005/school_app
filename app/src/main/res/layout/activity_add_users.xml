@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    tools:context=".AddUsersActivity">
+
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatButton
+            android:textColor="@color/white"
+            android:background="@color/black"
+            android:id="@+id/btn_student_add_users"
+            android:elevation="20dp"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:text="Student"
+            android:textSize="25dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:id="@+id/btn_teacher_add_users"
+            android:elevation="20dp"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Teacher"
+            android:textSize="25dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:id="@+id/teacher_layout_add_users"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <EditText
+            android:id="@+id/teacher_activity_name"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:textSize="25dp"
+            android:hint="Teacher Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:inputType="textEmailAddress"
+            android:id="@+id/teacher_activity_email"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:textSize="25dp"
+            android:hint="Teacher Email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/teacher_activity_password"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:textSize="25dp"
+            android:hint="Teacher Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/add_users_errorView"
+        android:textAllCaps="false"
+        android:text="Show Error"
+        android:textSize="25dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:id="@+id/student_layout_add_users"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <EditText
+            android:id="@+id/student_activity_name"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:textSize="25dp"
+            android:hint="Student Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:inputType="number"
+            android:id="@+id/student_activity_roll_no"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:textSize="25dp"
+            android:hint="Student RollNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/student_activity_password"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:textSize="25dp"
+            android:hint="Student Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/submit_add_users"
+        android:textAllCaps="false"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:text="Submit"/>
+
+</LinearLayout>

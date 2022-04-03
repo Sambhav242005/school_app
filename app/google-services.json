@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "230292608922",
+    "firebase_url": "https://school-de2f7-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "school-de2f7",
+    "storage_bucket": "school-de2f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230292608922:android:8a0f9174643d4d45600c23",
+        "android_client_info": {
+          "package_name": "com.surana.myschool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230292608922-0697mn0kcke3bkumqpne3v1lh38jsa7l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkU7N_iI5kVQdWhQXHBWq9Rp8jyweY-ug"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230292608922-0697mn0kcke3bkumqpne3v1lh38jsa7l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

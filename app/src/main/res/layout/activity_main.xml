@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/drawer_layout"
+    tools:context=".MainActivity">
+    <com.google.android.material.navigation.NavigationView
+        android:fitsSystemWindows="true"
+        android:layout_gravity="start"
+        android:visibility="gone"
+        android:id="@+id/navigation_view"
+        app:menu="@menu/main_menu"
+        app:headerLayout="@layout/menu_header"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:focusable="auto"
+                android:id="@+id/main_search_edit_text"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:textSize="27dp"
+                android:hint="Search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/main_menu_btn"
+                android:src="@drawable/ic_menu"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:background="@color/white"
+                android:layout_width="55dp"
+                android:layout_height="55dp"/>
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:id="@+id/class_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+</LinearLayout>
