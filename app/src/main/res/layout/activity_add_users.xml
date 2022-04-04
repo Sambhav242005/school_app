@@ -2,18 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:gravity="center"
     tools:context=".AddUsersActivity">
 
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/users_progress_bar"
+        android:padding="10dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"/>
+
     <LinearLayout
-        android:id="@+id/add_users_main"
+        android:id="@+id/main_add_users"
+        android:orientation="vertical"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
         <LinearLayout
             android:padding="10dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -54,7 +64,6 @@
             android:visibility="gone"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_margin="10dp"
             android:id="@+id/teacher_layout_add_users"
             android:layout_width="match_parent"
             android:layout_height="250dp">
@@ -77,6 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <EditText
+                android:inputType="textPassword"
                 android:id="@+id/teacher_activity_password"
                 android:layout_margin="10dp"
                 android:padding="10dp"
@@ -86,12 +96,12 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_margin="10dp"
             android:id="@+id/student_layout_add_users"
             android:layout_width="match_parent"
-            android:layout_height="450dp">
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/student_activity_name"
@@ -120,24 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <EditText
-                android:inputType="number"
-                android:id="@+id/student_activity_father"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                android:textSize="25dp"
-                android:hint="Student Father"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <EditText
-                android:inputType="number"
-                android:id="@+id/student_activity_mother"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                android:textSize="25dp"
-                android:hint="Student Mother"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <EditText
+                android:inputType="textPassword"
                 android:id="@+id/student_activity_password"
                 android:layout_margin="10dp"
                 android:padding="10dp"
@@ -146,6 +139,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/show_password_add_users"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Show Password"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:textSize="23dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/submit_add_users"
@@ -157,38 +159,16 @@
             android:textSize="25dp"
             android:text="Submit"/>
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_select_class_add_users"
-            android:layout_margin="10dp"
-            android:text="Select Class"
-            android:padding="10dp"
-            android:textSize="25dp"
+            android:id="@+id/back_add_users"
             android:textAllCaps="false"
+            android:layout_margin="10dp"
+            android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:text="Back"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/select_class_layout"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <androidx.recyclerview.widget.RecyclerView
-            android:visibility="gone"
-            android:padding="10dp"
-            android:id="@+id/select_class_addUsers"
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/done_add_users"
-                android:text="Done"
-                android:textSize="23dp"
-                android:padding="10dp"
-                android:layout_margin="10dp"
-                android:textAllCaps="false"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
+
 
 </LinearLayout>

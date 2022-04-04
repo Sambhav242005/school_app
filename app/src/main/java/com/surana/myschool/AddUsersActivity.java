@@ -6,17 +6,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,24 +39,26 @@ public class AddUsersActivity extends AppCompatActivity {
 
     private static final String TAG = "Add Users";
     String select = "student";
-    Button btn_student,btn_teacher,btn_submit,btn_selectClass,btn_done;
-    LinearLayout student_layout,teacher_layout,main_layout,select_layout;
-    EditText mEditStudentName,mEditStudentRollNo,mEditStudentPassword,mEditStudentFather,mEditStudentMother,mEditStudentAge;
+    Button btn_student,btn_teacher,btn_submit,btn_back;
+    CheckBox show_password;
+    LinearLayout student_layout,teacher_layout,main_layout;
+    EditText mEditStudentName,mEditStudentRollNo,mEditStudentPassword,mEditStudentAge;
     EditText mEditTeacherName,mEditTeacherEmail,mEditTeacherPassword;
     TextView mError;
-    FirebaseAuth mAuth;
+    FirebaseAuth mAuth,createAuth;
     FirebaseUser mUser;
     DatabaseReference mRef;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_users);
 
-        btn_done = findViewById(R.id.done_add_users);
-        main_layout = findViewById(R.id.add_users_main);
-        select_layout = findViewById(R.id.select_class_layout);
-        btn_selectClass = findViewById(R.id.btn_select_class_add_users);
+        main_layout = findViewById(R.id.main_add_users);
+        progressBar = findViewById(R.id.users_progress_bar);
+        btn_back = findViewById(R.id.back_add_users);
+        show_password = findViewById(R.id.show_password_add_users);
         student_layout = findViewById(R.id.student_layout_add_users);
         teacher_layout = findViewById(R.id.teacher_layout_add_users);
         btn_student = findViewById(R.id.btn_student_add_users);
@@ -59,20 +69,36 @@ public class AddUsersActivity extends AppCompatActivity {
         mRef = FirebaseDatabase.getInstance().getReference().child("users");
         mUser = mAuth.getCurrentUser();
 
+
+
         mEditStudentName = findViewById(R.id.student_activity_name);
         mEditStudentRollNo = findViewById(R.id.student_activity_roll_no);
         mEditStudentPassword = findViewById(R.id.student_activity_password);
-        mEditStudentFather = findViewById(R.id.student_activity_father);
-        mEditStudentMother = findViewById(R.id.student_activity_mother);
         mEditStudentAge = findViewById(R.id.student_activity_age);
 
         mEditTeacherName = findViewById(R.id.teacher_activity_name);
         mEditTeacherEmail = findViewById(R.id.teacher_activity_email);
         mEditTeacherPassword = findViewById(R.id.teacher_activity_password);
 
+        mEditTeacherPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        mEditStudentPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
         if (select.equals("student")){
             select_student();
         }
+
+        show_password.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    mEditTeacherPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    mEditStudentPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }else {
+                    mEditTeacherPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    mEditStudentPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
 
         btn_student.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,9 +125,7 @@ public class AddUsersActivity extends AppCompatActivity {
 
                     if (!TextUtils.isEmpty(mEditStudentName.getText().toString())
                             && !TextUtils.isEmpty(mEditStudentRollNo.getText().toString())
-                            && !TextUtils.isEmpty(mEditStudentPassword.getText().toString())
-                            && !TextUtils.isEmpty(mEditStudentFather.getText().toString())
-                            && !TextUtils.isEmpty(mEditStudentMother.getText().toString())){
+                            && !TextUtils.isEmpty(mEditStudentPassword.getText().toString())){
 
                         Log.d(TAG,"Student");
 
@@ -128,30 +152,70 @@ public class AddUsersActivity extends AppCompatActivity {
             }
         });
 
-        btn_selectClass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                main_layout.setVisibility(View.GONE);
-                select_layout.setVisibility(View.VISIBLE);
-            }
-        });
-        btn_done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                select_layout.setVisibility(View.GONE);
-                main_layout.setVisibility(View.VISIBLE);
-            }
-        });
+        FirebaseOptions firebaseOptions = new FirebaseOptions.Builder()
+                .setDatabaseUrl("https://school-de2f7-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .setApiKey("AIzaSyB59QiOdBgKEbxN68XCJJydsg9Rfm-b4Yk")
+                .setApplicationId("com.surana.myschool").build();
+
+        try {
+            FirebaseApp myApp = FirebaseApp.initializeApp(getApplicationContext(), firebaseOptions, "MySchool");
+            createAuth = FirebaseAuth.getInstance(myApp);
+        } catch (IllegalStateException e){
+            createAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance("MySchool"));
+        }
 
     }
 
     private void addStudentAccount() {
+        //Show Progress Bar
+
+        main_layout.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setProgress(0);
+
         // Add Student
         String email = mEditStudentRollNo.getText().toString()+"@gmail.com";
         String username = mEditStudentName.getText().toString();
+        String roll_no = mEditStudentRollNo.getText().toString();
         String password = mEditStudentPassword.getText().toString();
-        String father = mEditStudentFather.getText().toString();
-        String mother = mEditStudentMother.getText().toString();
+        String age = mEditStudentAge.getText().toString();
+
+        createAuth.createUserWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                progressBar.setProgress(100);
+                progressBar.setVisibility(View.GONE);
+                main_layout.setVisibility(View.VISIBLE);
+                mError.setVisibility(View.GONE);
+
+                Map<String,String> hashMap = new HashMap<>();
+
+                hashMap.put("username",username);
+                hashMap.put("email",email);
+                hashMap.put("roll_no",roll_no);
+                hashMap.put("age",age);
+                hashMap.put("img_src","null");
+                hashMap.put("token", authResult.getUser().getUid());
+                hashMap.put("type",select);
+
+                mRef.child(authResult.getUser().getUid()).setValue(hashMap);
+
+                mEditStudentName.setText("");
+                mEditStudentAge.setText("");
+                mEditStudentRollNo.setText("");
+                mEditStudentPassword.setText("");
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                progressBar.setProgress(100);
+                progressBar.setVisibility(View.GONE);
+                main_layout.setVisibility(View.VISIBLE);
+                mError.setVisibility(View.VISIBLE);
+                mError.setText(e.getMessage());
+            }
+        });
 
     }
 
@@ -160,7 +224,7 @@ public class AddUsersActivity extends AppCompatActivity {
         String password = mEditTeacherPassword.getText().toString();
         String username = mEditTeacherName.getText().toString();
 
-        mAuth.createUserWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        createAuth.createUserWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
 
@@ -174,12 +238,16 @@ public class AddUsersActivity extends AppCompatActivity {
                 hashMap.put("token", authResult.getUser().getUid());
 
                 mRef.child(authResult.getUser().getUid()).setValue(hashMap);
-
                 mError.setVisibility(View.GONE);
+
+                mEditTeacherName.setText("");
+                mEditTeacherEmail.setText("");
+                mEditTeacherPassword.setText("");
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception e) {
+            public void onFailure(Exception e) {
                 mError.setVisibility(View.VISIBLE);
                 mError.setText(e.getMessage());
             }

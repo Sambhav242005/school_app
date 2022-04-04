@@ -8,4 +8,10 @@
         app:showAsAction="always"
         />
 
+    <item
+        android:id="@+id/sign_out"
+        android:title="Sign Out"
+        app:showAsAction="always"
+        />
+
 </menu>

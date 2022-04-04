@@ -34,7 +34,7 @@ public class AdapterStudent extends RecyclerView.Adapter<AdapterStudent.ViewHold
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
         holder.name.setText(students.get(position).getStudent_name());
-        holder.phone_no.setText(students.get(position).getStudent_class());
+        holder.roll_no.setText(students.get(position).getStudent_roll_no());
     }
 
     @Override
@@ -44,11 +44,11 @@ public class AdapterStudent extends RecyclerView.Adapter<AdapterStudent.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView name,phone_no;
+        TextView name,roll_no;
         public ViewHolder( View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.student_layout_name);
-            phone_no = itemView.findViewById(R.id.teacher_layout_phone_no);
+            roll_no = itemView.findViewById(R.id.student_activity_roll_no);
 
         }
     }

@@ -7,10 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ItemClass> classArrayList;
     AdapterClass adapterClass;
     RecyclerView classRecycle;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,23 +49,42 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setUpToolBar();
+        mAuth = FirebaseAuth.getInstance();
         classRecycle = findViewById(R.id.class_recyclerView);
         classArrayList = new ArrayList<>();
         adapterClass = new AdapterClass(classArrayList,MainActivity.this);
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mUser = mAuth.getCurrentUser();
         mRef = FirebaseDatabase.getInstance().getReference();
         btnAddClass = findViewById(R.id.add_class);
         mNavigationView = findViewById(R.id.navigation_view);
         btnMenu = findViewById(R.id.main_menu_btn);
         searchALl = findViewById(R.id.main_search_edit_text);
 
-        classRecycle.setAdapter(adapterClass);
-        classRecycle.setLayoutManager(new LinearLayoutManager(this));
+
 
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mNavigationView.setVisibility(View.VISIBLE);
+            }
+        });
+        classRecycle.setAdapter(adapterClass);
+        classRecycle.setLayoutManager(new LinearLayoutManager(this));
+
+        searchALl.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
             }
         });
 
@@ -127,11 +150,33 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.add_users:
                         startActivity(new Intent(MainActivity.this, AddUsersActivity.class));
                         break;
+                    case R.id.sign_out:
+                        mAuth.signOut();
+                        startActivity(new Intent(MainActivity.this,StartActivity.class));
+                        finish();
+                        break;
+
                 }
 
                 return true;
             }
         });
+    }
+
+    private void filter(String s) {
+        ArrayList<ItemClass> stringArrayList = new ArrayList<>();
+        AdapterClass adapter = new AdapterClass(stringArrayList,this);
+
+        for (ItemClass itemListTask : classArrayList){
+            if (itemListTask.getClass_name().toLowerCase().contains(s.toLowerCase()) ||
+                    itemListTask.getCreate_by().toLowerCase().contains(s.toLowerCase())){
+
+                stringArrayList.add(new ItemClass(itemListTask.getClass_name(),itemListTask.getCreate_by()));
+            }
+            adapter.notifyDataSetChanged();
+        }
+        classRecycle.setAdapter(adapter);
+        classRecycle.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void setUpToolBar() {

@@ -65,6 +65,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/show_password_start"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:text="Show Password"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login_submit"
         android:text="Submit"

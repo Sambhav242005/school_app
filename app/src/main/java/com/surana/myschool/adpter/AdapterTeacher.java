@@ -42,11 +42,11 @@ public class AdapterTeacher extends RecyclerView.Adapter<AdapterTeacher.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView name,class_name,roll_no;
+        TextView name,create_by,roll_no;
         public ViewHolder( View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.student_layout_name);
-            class_name = itemView.findViewById(R.id.student_layout_class);
+            create_by = itemView.findViewById(R.id.student_layout_create_by);
             roll_no = itemView.findViewById(R.id.student_layout_roll_no);
 
         }

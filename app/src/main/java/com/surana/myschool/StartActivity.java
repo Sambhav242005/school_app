@@ -8,8 +8,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -34,12 +38,14 @@ public class StartActivity extends AppCompatActivity {
     String select ="student";
     FirebaseAuth mAuth;
     TextView mError;
+    CheckBox show_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
+        show_password = findViewById(R.id.show_password_start);
         mAuth = FirebaseAuth.getInstance();
         btn_submit = findViewById(R.id.login_submit);
         mUser = mAuth.getCurrentUser();
@@ -48,6 +54,19 @@ public class StartActivity extends AppCompatActivity {
         btn_studentActivity = findViewById(R.id.student_activity);
         btn_teacherActivity = findViewById(R.id.teacher_activity);
         mError = findViewById(R.id.error_login);
+
+        show_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+        show_password.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    show_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }else{
+                    show_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
 
         if (mUser != null){
             startActivity(new Intent(StartActivity.this,MainActivity.class));
@@ -70,7 +89,7 @@ public class StartActivity extends AppCompatActivity {
                 btn_teacherActivity.setTextColor(Color.parseColor("#ffffff"));
                 btn_studentActivity.setBackgroundColor(Color.parseColor("#ffffff"));
                 btn_studentActivity.setTextColor(Color.parseColor("#000000"));
-                mEmail.setHint("Id");
+                mEmail.setHint("Email");
             }
         });
         btn_studentActivity.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +115,12 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void submit() {
-        String email = mEmail.getText().toString()+"@gmail.com";
+        String email = null;
+        if (select.equals("student")){
+            email = mEmail.getText().toString() + "@gmail.com";
+        }else {
+            email = mEmail.getText().toString();
+        }
         String password = mPassword.getText().toString();
 
         if (!TextUtils.isEmpty(mEmail.getText().toString()) && !TextUtils.isEmpty(mPassword.getText().toString())){

@@ -13,8 +13,8 @@
     <TextView
         android:padding="5dp"
         android:textSize="20dp"
-        android:id="@+id/teacher_layout_phone_no"
-        android:text="Teacher Phone No"
+        android:id="@+id/teacher_layout_create_by"
+        android:text="Teacher Added By"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>
