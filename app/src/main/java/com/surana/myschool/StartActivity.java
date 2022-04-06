@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,12 +41,16 @@ public class StartActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     TextView mError;
     CheckBox show_password;
+    LinearLayout main_layout;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
+        main_layout = findViewById(R.id.main_start_layout);
+        progressBar = findViewById(R.id.start_progress_bar);
         show_password = findViewById(R.id.show_password_start);
         mAuth = FirebaseAuth.getInstance();
         btn_submit = findViewById(R.id.login_submit);
@@ -55,15 +61,15 @@ public class StartActivity extends AppCompatActivity {
         btn_teacherActivity = findViewById(R.id.teacher_activity);
         mError = findViewById(R.id.error_login);
 
-        show_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        mPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         show_password.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
-                    show_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    mPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 }else{
-                    show_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    mPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
             }
         });
@@ -115,6 +121,10 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void submit() {
+        main_layout.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setProgress(0);
+
         String email = null;
         if (select.equals("student")){
             email = mEmail.getText().toString() + "@gmail.com";
@@ -141,8 +151,15 @@ public class StartActivity extends AppCompatActivity {
 
                     mError.setVisibility(View.VISIBLE);
                     mError.setText(e.getMessage());
+
+                    main_layout.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
                 }
             });
+        }else {
+            mError.setText("Enter All Detail" );
+            main_layout.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
         }
 
     }

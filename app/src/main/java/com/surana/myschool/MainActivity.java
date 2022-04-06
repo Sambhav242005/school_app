@@ -30,7 +30,7 @@ import com.surana.myschool.item.ItemClass;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterClass.OnClassListener {
 
     private static final String TAG = "My App";
     NavigationView mNavigationView;
@@ -48,11 +48,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setUpToolBar();
         mAuth = FirebaseAuth.getInstance();
         classRecycle = findViewById(R.id.class_recyclerView);
         classArrayList = new ArrayList<>();
-        adapterClass = new AdapterClass(classArrayList,MainActivity.this);
+        adapterClass = new AdapterClass(classArrayList,this);
         mUser = mAuth.getCurrentUser();
         mRef = FirebaseDatabase.getInstance().getReference();
         btnAddClass = findViewById(R.id.add_class);
@@ -60,7 +59,12 @@ public class MainActivity extends AppCompatActivity {
         btnMenu = findViewById(R.id.main_menu_btn);
         searchALl = findViewById(R.id.main_search_edit_text);
 
+        classRecycle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
 
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +126,8 @@ public class MainActivity extends AppCompatActivity {
                     if (dataSnapshot.child("list_users").child(mUser.getUid()).exists()){
                         String class_name = dataSnapshot.child("class_name").getValue().toString();
                         String create_by = dataSnapshot.child("create_by").getValue().toString();
-                        classArrayList.add(new ItemClass(class_name,create_by));
+                        String token = dataSnapshot.child("token").getValue().toString();
+                        classArrayList.add(new ItemClass(class_name,create_by,token));
                         adapterClass.notifyDataSetChanged();
                     }
 
@@ -171,21 +176,12 @@ public class MainActivity extends AppCompatActivity {
             if (itemListTask.getClass_name().toLowerCase().contains(s.toLowerCase()) ||
                     itemListTask.getCreate_by().toLowerCase().contains(s.toLowerCase())){
 
-                stringArrayList.add(new ItemClass(itemListTask.getClass_name(),itemListTask.getCreate_by()));
+                stringArrayList.add(new ItemClass(itemListTask.getClass_name(),itemListTask.getCreate_by() ,itemListTask.getToken()));
             }
             adapter.notifyDataSetChanged();
         }
         classRecycle.setAdapter(adapter);
         classRecycle.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    private void setUpToolBar() {
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
     }
 
     @Override
@@ -195,4 +191,17 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onClassClick(int position) {
+
+        String token = classArrayList.get(position).getToken();
+        String name = classArrayList.get(position).getClass_name();
+
+        Intent intent = new Intent(MainActivity.this,ClassActivity.class);
+        intent.putExtra("token",token);
+        intent.putExtra("name",name);
+        startActivity(intent);
+        finish();
+
+    }
 }

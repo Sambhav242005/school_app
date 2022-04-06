@@ -17,17 +17,17 @@ import java.util.Comparator;
 public class AdapterClass extends RecyclerView.Adapter<AdapterClass.ViewHolder>{
 
     private ArrayList<ItemClass> class_array = new ArrayList<>();
-    private Context context;
+    private OnClassListener mClassListener;
 
-    public AdapterClass(ArrayList<ItemClass> class_array, Context context) {
+    public AdapterClass(ArrayList<ItemClass> class_array, OnClassListener mClassListener) {
         this.class_array = class_array;
-        this.context = context;
+        this.mClassListener = mClassListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.class_name_layout,parent,false);
-        AdapterClass.ViewHolder holder = new AdapterClass.ViewHolder(view);
+        AdapterClass.ViewHolder holder = new AdapterClass.ViewHolder(view,mClassListener);
         return holder;
     }
 
@@ -42,14 +42,30 @@ public class AdapterClass extends RecyclerView.Adapter<AdapterClass.ViewHolder>{
         return class_array.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView className,createBy;
-        public ViewHolder(View itemView) {
+        OnClassListener onClassListener;
+
+
+        public ViewHolder(View itemView,OnClassListener onClassListener) {
             super(itemView);
             className = itemView.findViewById(R.id.class_layout_name);
             createBy = itemView.findViewById(R.id.class_layout_create_by);
+
+            this.onClassListener = onClassListener;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            onClassListener.onClassClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnClassListener{
+        void onClassClick(int position);
     }
 
 }

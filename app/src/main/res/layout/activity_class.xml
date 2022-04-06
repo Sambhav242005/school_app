@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ClassActivity">
+
+    <LinearLayout
+        android:id="@+id/class_main"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/class_back_btn"
+                android:background="@color/white"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_back"
+                android:scaleType="fitCenter"
+                android:padding="10dp"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/class_name_btn"
+                android:layout_margin="5dp"
+                android:gravity="start"
+                android:background="@color/white"
+                android:text="Class Name"
+                android:padding="10dp"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_message_view"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="match_parent"/>
+
+        <LinearLayout
+            android:id="@+id/send_image_layout"
+            android:visibility="gone"
+            android:layout_alignBottom="@id/class_main"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:background="@color/white"
+                android:id="@+id/image_view"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:textAllCaps="false"
+                    android:id="@+id/send_cancel_btn"
+                    android:layout_weight="1"
+                    android:text="Cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatButton
+
+                    android:textAllCaps="false"
+                    android:id="@+id/send_image_btn"
+                    android:layout_weight="1"
+                    android:text="Send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/send_layout"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/class_activity_message"
+                android:hint="Message"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:textSize="25dp"
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/class_activity_btn_select_image"
+                android:padding="5dp"
+                android:src="@drawable/ic_image"
+                android:scaleType="fitCenter"
+                android:background="@color/white"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+            <ImageButton
+                android:id="@+id/class_activity_btn_message"
+                android:background="@color/white"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_send"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+</LinearLayout>
