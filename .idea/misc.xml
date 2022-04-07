@@ -10,6 +10,7 @@
         <entry key="..\:/Users/ysura/AndroidStudioProjects/MySchool/app/src/main/res/drawable/side_nav_bar.xml" value="0.1845" />
         <entry key="..\:/Users/ysura/AndroidStudioProjects/MySchool/app/src/main/res/layout/activity_add_class.xml" value="0.2484375" />
         <entry key="..\:/Users/ysura/AndroidStudioProjects/MySchool/app/src/main/res/layout/activity_add_users.xml" value="0.16" />
+        <entry key="..\:/Users/ysura/AndroidStudioProjects/MySchool/app/src/main/res/layout/activity_add_users_in_class.xml" value="0.2484375" />
         <entry key="..\:/Users/ysura/AndroidStudioProjects/MySchool/app/src/main/res/layout/activity_class.xml" value="0.2484375" />
         <entry key="..\:/Users/ysura/AndroidStudioProjects/MySchool/app/src/main/res/layout/activity_login.xml" value="0.2484375" />
         <entry key="..\:/Users/ysura/AndroidStudioProjects/MySchool/app/src/main/res/layout/activity_main.xml" value="0.264" />
@@ -33,6 +34,7 @@
         <entry key="..\:/Users/ysura/AndroidStudioProjects/MySchool/app/src/main/res/layout/send_image_layout.xml" value="0.2484375" />
         <entry key="..\:/Users/ysura/AndroidStudioProjects/MySchool/app/src/main/res/layout/student_item.xml" value="0.2484375" />
         <entry key="..\:/Users/ysura/AndroidStudioProjects/MySchool/app/src/main/res/layout/teacher_item.xml" value="0.2484375" />
+        <entry key="..\:/Users/ysura/AndroidStudioProjects/MySchool/app/src/main/res/layout/users_layout_select.xml" value="0.2484375" />
         <entry key="..\:/Users/ysura/AndroidStudioProjects/MySchool/app/src/main/res/menu/activity_main_drawer.xml" value="0.2484375" />
         <entry key="..\:/Users/ysura/AndroidStudioProjects/MySchool/app/src/main/res/menu/main_activity2.xml" value="0.2484375" />
         <entry key="..\:/Users/ysura/AndroidStudioProjects/MySchool/app/src/main/res/menu/main_menu.xml" value="0.2484375" />

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
@@ -65,11 +66,10 @@ public class AddUsersActivity extends AppCompatActivity {
         btn_teacher = findViewById(R.id.btn_teacher_add_users);
         btn_submit = findViewById(R.id.submit_add_users);
         mError = findViewById(R.id.add_users_errorView);
+
         mAuth = FirebaseAuth.getInstance();
         mRef = FirebaseDatabase.getInstance().getReference().child("users");
         mUser = mAuth.getCurrentUser();
-
-
 
         mEditStudentName = findViewById(R.id.student_activity_name);
         mEditStudentRollNo = findViewById(R.id.student_activity_roll_no);
@@ -86,6 +86,14 @@ public class AddUsersActivity extends AppCompatActivity {
         if (select.equals("student")){
             select_student();
         }
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AddUsersActivity.this,MainActivity.class));
+                finish();
+            }
+        });
 
         show_password.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -191,6 +199,7 @@ public class AddUsersActivity extends AppCompatActivity {
                 Map<String,String> hashMap = new HashMap<>();
 
                 hashMap.put("username",username);
+                hashMap.put("create_by",mUser.getUid());
                 hashMap.put("email",email);
                 hashMap.put("roll_no",roll_no);
                 hashMap.put("age",age);

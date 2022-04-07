@@ -67,7 +67,7 @@ public class AddClassActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
                     main_layout.setVisibility(View.GONE);
                     progressBar.setProgress(0);
-                    mRef.child("class_name").addValueEventListener(new ValueEventListener() {
+                    mRef.child("class").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange( DataSnapshot snapshot) {
                             check = 0;
@@ -130,7 +130,6 @@ public class AddClassActivity extends AppCompatActivity {
 
     private void addClass() {
         String uid = mUser.getUid();
-        String email =mUser.getEmail();
         String className = mClassName.getText().toString();
         String token = getSaltString(20);
 
@@ -141,8 +140,9 @@ public class AddClassActivity extends AppCompatActivity {
         hashMap.put("create_by",username);
         hashMap.put("token",token);
 
-        mRef.child("class_name").child(token).setValue(hashMap);
-        mRef.child("class_name").child(token).child("list_users").child(mUser.getUid()).setValue("Add");
+        mRef.child("class").child(token).setValue(hashMap);
+        mRef.child("class").child(token).child("list_users")
+                .child(uid).child("add_by").setValue(uid);
 
         startActivity(new Intent(AddClassActivity.this,MainActivity.class));
         finish();

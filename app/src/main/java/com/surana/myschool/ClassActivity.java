@@ -115,6 +115,25 @@ public class ClassActivity extends AppCompatActivity {
         class_name = getIntent().getStringExtra("name");
         btn_nameClass.setText(class_name);
 
+        btn_nameClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRef.child("users").child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        if (snapshot.child("type").getValue().toString().equals("teacher")){
+                            intentSendToAddUserActivity();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+
         
         btn_select_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +170,16 @@ public class ClassActivity extends AppCompatActivity {
 
     }
 
+    private void intentSendToAddUserActivity() {
+        Intent intent = new Intent(ClassActivity.this, AddUsersInClassActivity.class);
+        intent.putExtra("token", tokenClass);
+        intent.putExtra("class_name", class_name);
+        intent.putExtra("name", name);
+        startActivity(intent);
+    }
+
     private void getInit() {
+
     }
 
     private void getUsername() {
@@ -223,6 +251,7 @@ public class ClassActivity extends AppCompatActivity {
                     String type = dataSnapshot.child("type").getValue().toString();
                     String hour = dataSnapshot.child("hour").getValue().toString();
                     String min = dataSnapshot.child("min").getValue().toString();
+                    String sec = dataSnapshot.child("sec").getValue().toString();
                     String date = dataSnapshot.child("date").getValue().toString();
                     String message = dataSnapshot.child("message").getValue().toString();
                     String send_by = dataSnapshot.child("send_by").getValue().toString();
@@ -233,7 +262,7 @@ public class ClassActivity extends AppCompatActivity {
                     if (mUser.getUid().equals(uid_send_by)){
                         me = true;
                     }
-                    messageArrayList.add(new ItemMessage(message,send_by,token,type,hour+":"+min,"Date :-"+date,me));
+                    messageArrayList.add(new ItemMessage(message,send_by,token,type,hour+":"+min+":"+sec,"Date :-"+date,me));
 
                 }
 
@@ -270,6 +299,7 @@ public class ClassActivity extends AppCompatActivity {
         hashMap.put("type",type);
         hashMap.put("hour", getCurrentTimeHour());
         hashMap.put("min", getCurrentTimeMin());
+        hashMap.put("sec", getCurrentTimeSec());
         hashMap.put("date", day+"/"+mouth+"/"+year);
 
         mRef.child("message").child(tokenClass).child(token).setValue(hashMap);
@@ -324,6 +354,12 @@ public class ClassActivity extends AppCompatActivity {
     public String getCurrentTimeMin() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("mm");
+        String strDate = mdformat.format(calendar.getTime());
+        return  strDate;
+    }
+    public String getCurrentTimeSec() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("ss");
         String strDate = mdformat.format(calendar.getTime());
         return  strDate;
     }

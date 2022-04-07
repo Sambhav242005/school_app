@@ -59,13 +59,6 @@ public class MainActivity extends AppCompatActivity implements AdapterClass.OnCl
         btnMenu = findViewById(R.id.main_menu_btn);
         searchALl = findViewById(R.id.main_search_edit_text);
 
-        classRecycle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements AdapterClass.OnCl
             }
         });
 
-        mRef.child("class_name").addValueEventListener(new ValueEventListener() {
+        mRef.child("class").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
