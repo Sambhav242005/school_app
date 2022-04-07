@@ -9,8 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,7 +26,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.surana.myschool.adpter.AdapterClass;
 import com.surana.myschool.adpter.AdapterUsers;
+import com.surana.myschool.item.ItemClass;
 import com.surana.myschool.item.ItemUsers;
 
 import java.util.ArrayList;
@@ -33,8 +39,8 @@ public class AddUsersInClassActivity extends AppCompatActivity {
 
     private static final String TAG = "My App";
     ImageButton btn_back;
+    EditText search_users;
     RecyclerView recyclerView_users;
-    TextView topTextView;
     String class_name,token,name;
     DatabaseReference mRef;
     ArrayList<String> alreadyAdd;
@@ -52,7 +58,7 @@ public class AddUsersInClassActivity extends AppCompatActivity {
 
         recyclerView_users = findViewById(R.id.add_users_in_class_users_recycle);
 
-        topTextView = findViewById(R.id.add_users_in_class_textView);
+        search_users = findViewById(R.id.search_users);
 
         class_name = getIntent().getStringExtra("class_name");
         token = getIntent().getStringExtra("token");
@@ -62,6 +68,23 @@ public class AddUsersInClassActivity extends AppCompatActivity {
 
         getInitAdd();
         getInitUsers();
+
+        search_users.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,32 +111,33 @@ public class AddUsersInClassActivity extends AppCompatActivity {
                         });
                     }
                 }
+                Intent intent = new Intent(AddUsersInClassActivity.this, ClassActivity.class);
+                intent.putExtra("name", class_name);
+                intent.putExtra("token", token);
+                startActivity(intent);
+                finish();
 
-                {
-                    Intent intent = new Intent(AddUsersInClassActivity.this, ClassActivity.class);
-                    intent.putExtra("name", class_name);
-                    intent.putExtra("token", token);
-                    startActivity(intent);
-                    finish();
-                }
             }
         });
 
-
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
     }
 
-    protected String getSaltString(int length) {
-        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < length) {
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
-        }
-        String saltStr = salt.toString();
-        return saltStr;
+    private void filter(String s) {
+        ArrayList<ItemUsers> stringArrayList = new ArrayList<>();
+        AdapterUsers adapter = new AdapterUsers(stringArrayList,this);
 
+        for (ItemUsers itemUsers : usersArrayList){
+            if (itemUsers.getUsername().toLowerCase().contains(s.toLowerCase()) ||
+                    itemUsers.getCreate_by().toLowerCase().contains(s.toLowerCase())){
+                stringArrayList.add(new ItemUsers(itemUsers.getToken(),itemUsers.getUsername(),
+                        itemUsers.getRollNo(),itemUsers.getCreate_by(),itemUsers.getType(),itemUsers.getAdd()));
+            }
+            adapter.notifyDataSetChanged();
+        }
+        recyclerView_users.setAdapter(adapter);
+        recyclerView_users.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void getInitUsers() {
@@ -145,7 +169,8 @@ public class AddUsersInClassActivity extends AppCompatActivity {
                         }
                     }
 
-                    usersArrayList.add(new ItemUsers(dataSnapshot.getKey(),username,"Roll No :- "+roll_no,"Add By :- "+add_by,type, add));
+                    usersArrayList.add(new ItemUsers(dataSnapshot.getKey(),username
+                            ,"Roll No :-  "+roll_no,"Add By :- "+add_by,type, add));
                     adapterUsers.notifyDataSetChanged();
                     Log.d(TAG,dataSnapshot.toString());
                 }

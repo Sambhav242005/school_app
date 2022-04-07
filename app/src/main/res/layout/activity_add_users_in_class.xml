@@ -18,21 +18,16 @@
             android:src="@drawable/ic_back"
             android:layout_width="50dp"
             android:layout_height="match_parent"/>
-        <TextView
-            android:id="@+id/add_users_in_class_textView"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:padding="10dp"
+        <EditText
+            android:id="@+id/search_users"
+            android:textSize="23dp"
+            android:hint="Search Name"
             android:layout_margin="10dp"
-            android:text="Add User In Class Name"
+            android:padding="10dp"
+            android:focusable="auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
-    <EditText
-        android:focusable="auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/add_users_in_class_users_recycle"
         android:layout_weight="1"
