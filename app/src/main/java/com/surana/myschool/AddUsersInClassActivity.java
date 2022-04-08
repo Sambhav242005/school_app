@@ -113,7 +113,7 @@ public class AddUsersInClassActivity extends AppCompatActivity {
                         });
                     }
                 }
-                Intent intent = new Intent(AddUsersInClassActivity.this, ClassActivity.class);
+                Intent intent = new Intent(AddUsersInClassActivity.this, MainActivity.class);
                 intent.putExtra("name", class_name);
                 intent.putExtra("token", token);
                 startActivity(intent);
