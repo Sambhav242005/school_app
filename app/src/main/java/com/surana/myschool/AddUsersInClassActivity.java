@@ -32,6 +32,8 @@ import com.surana.myschool.item.ItemClass;
 import com.surana.myschool.item.ItemUsers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 public class AddUsersInClassActivity extends AppCompatActivity {
@@ -169,13 +171,14 @@ public class AddUsersInClassActivity extends AppCompatActivity {
                         }
                     }
 
+                    Collections.sort(usersArrayList, Comparator.comparing(ItemUsers::getType));
+
                     usersArrayList.add(new ItemUsers(dataSnapshot.getKey(),username
                             ,"Roll No :-  "+roll_no,"Add By :- "+add_by,type, add));
-                    adapterUsers.notifyDataSetChanged();
                     Log.d(TAG,dataSnapshot.toString());
                 }
 
-
+                adapterUsers.notifyDataSetChanged();
 
             }
 

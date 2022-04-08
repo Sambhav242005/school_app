@@ -18,6 +18,8 @@
         android:layout_height="wrap_content"/>
 
     <LinearLayout
+        android:padding="10dp"
+        android:background="@drawable/message_desgin"
         android:id="@+id/message_main"
         android:gravity="bottom"
         android:layout_width="250dp"

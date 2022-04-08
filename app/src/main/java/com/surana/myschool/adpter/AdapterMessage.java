@@ -53,8 +53,6 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.ViewHold
             holder.send_by.setText("You");
             holder.message_layout.setGravity(Gravity.END);
         }else {
-            holder.main_layout.setBackgroundColor(Color.parseColor("#f77800"));
-            holder.imageView.setBackgroundColor(Color.parseColor("#f77800"));
             holder.send_by.setText("~"+send_by);
         }
 

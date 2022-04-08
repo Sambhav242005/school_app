@@ -8,8 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +48,11 @@ import com.google.firebase.storage.UploadTask;
 import com.surana.myschool.adpter.AdapterMessage;
 import com.surana.myschool.item.ItemMessage;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -204,10 +215,20 @@ public class ClassActivity extends AppCompatActivity {
             progressDialog.setTitle("Uploading....");
             progressDialog.show();
 
+
             String name = select.getLastPathSegment();
             String extension = name.substring(name.lastIndexOf("."));
             StorageReference storageReference = mStorageRef.child(getSaltString(20)+extension);
-            UploadTask uploadTask = storageReference.putFile(select);
+            Bitmap bmp = null;
+            try {
+                bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), select);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+            byte[] data = baos.toByteArray();
+            UploadTask uploadTask = storageReference.putBytes(data);
 
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -219,6 +240,7 @@ public class ClassActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             sendMessage(uri.toString(),"image");
+
                         }
                     });
                     dismissProgress();
@@ -238,6 +260,7 @@ public class ClassActivity extends AppCompatActivity {
 
         }
     }
+
 
     private void getMessage() {
 
@@ -313,7 +336,6 @@ public class ClassActivity extends AppCompatActivity {
         sendImage_layout.setVisibility(View.GONE);
     }
 
-
     private void imageSelect() {
         Intent i = new Intent();
         i.setType("image/*");
@@ -333,6 +355,7 @@ public class ClassActivity extends AppCompatActivity {
         }
 
     }
+
     protected String getSaltString(int length) {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();
@@ -372,5 +395,47 @@ public class ClassActivity extends AppCompatActivity {
         SimpleDateFormat dateFormatDay = new SimpleDateFormat("dd");
         day = dateFormatDay.format(cal.getTime());
         //   mDaySelect.setText(day+" / "+mouth+" / "+year);
+    }
+    public File saveBitmapToFile(File file){
+        try {
+
+            // BitmapFactory options to downsize the image
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            o.inSampleSize = 6;
+            // factor of downsizing the image
+
+            FileInputStream inputStream = new FileInputStream(file);
+            //Bitmap selectedBitmap = null;
+            BitmapFactory.decodeStream(inputStream, null, o);
+            inputStream.close();
+
+            // The new size we want to scale to
+            final int REQUIRED_SIZE=75;
+
+            // Find the correct scale value. It should be the power of 2.
+            int scale = 1;
+            while(o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
+                scale *= 2;
+            }
+
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            inputStream = new FileInputStream(file);
+
+            Bitmap selectedBitmap = BitmapFactory.decodeStream(inputStream, null, o2);
+            inputStream.close();
+
+            // here i override the original image file
+            file.createNewFile();
+            FileOutputStream outputStream = new FileOutputStream(file);
+
+            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , outputStream);
+
+            return file;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
